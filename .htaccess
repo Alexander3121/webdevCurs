@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Существующие файлы (css, js, картинки) отдаём как есть,
+# всё остальное — во фронт-контроллер
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
+
+# Служебные файлы недоступны из браузера
+<FilesMatch "^(config|config\.local|router)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
